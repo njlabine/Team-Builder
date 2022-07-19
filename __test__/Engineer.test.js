@@ -1,4 +1,4 @@
-const Engineer = require("../library/Enginner");
+const Engineer = require("../lib/Enginner");
 const theEngineer = new Engineer(
   "Nate",
   "614",
@@ -10,7 +10,7 @@ test("Get all of the info", () => {
   expect(theEngineer.name).toEqual("Nate");
   expect(theEngineer.id).toEqual("614");
   expect(theEngineer.email).toEqual("nate@email.com");
-  expect(theEngineer.github).toEqual("github.com/njlaibne");
+  expect(theEngineer.github).toEqual("github.com/njlabine");
 });
 
 test("Get the Name", () => {
@@ -26,7 +26,7 @@ test("Get the Email", () => {
 });
 
 test("Get the Github", () => {
-  expect(theEngineer.getGithub).toEqual("github.com/njlabine");
+  expect(theEngineer.getGithub()).toEqual("github.com/njlabine");
 });
 
 test("Get the Role", () => {

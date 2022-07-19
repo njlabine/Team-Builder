@@ -1,18 +1,18 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateHTML = require("./src/cardTemplate");
-const Manager = require("./classes/manager");
-const Engineer = require("./classes/engineer");
-const Intern = require("./classes/intern");
-
-// const businessArray = [];
+// const generateHTML = require("./src/cardTemplate");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Enginner");
+const Intern = require("./lib/Intern");
+const theMarkdown = require("./src/theMarkdown");
+const team = [];
 
 const manPrompt = () => {
   inquirer
     .prompt([
       {
         type: "input",
-        message: "Please enter your name",
+        message: "Please enter the Manager's name",
         name: "name",
       },
       {
@@ -39,7 +39,7 @@ const manPrompt = () => {
         answers.officeNumber
       );
       team.push(manager);
-      promptList();
+      listOfPromp();
     });
 };
 
@@ -48,22 +48,22 @@ const engPrompt = () => {
     .prompt([
       {
         type: "input",
-        message: "Please enter your name",
+        message: "Please enter the Engineers name",
         name: "name",
       },
       {
         type: "input",
-        message: "Please enter your ID number",
+        message: "Please enter the Engineers ID number",
         name: "id",
       },
       {
         type: "input",
-        message: "Please enter your email address",
+        message: "Please enter the Engineers email address",
         name: "email",
       },
       {
         type: "input",
-        message: " Please enter your github username",
+        message: " Please enter the Engineers github username",
         name: "github",
       },
     ])
@@ -75,7 +75,7 @@ const engPrompt = () => {
         answers.github
       );
       team.push(engineer);
-      promptList();
+      listOfPromp();
     });
 };
 
@@ -84,22 +84,22 @@ const intPrompt = () => {
     .prompt([
       {
         type: "input",
-        message: "Please enter your name",
+        message: "Please enter the Intern's name",
         name: "name",
       },
       {
         type: "input",
-        message: "Please enter your ID number",
+        message: "Please enter the Intern's ID number",
         name: "id",
       },
       {
         type: "input",
-        message: "Please enter your email address",
+        message: "Please enter the Intern's email address",
         name: "email",
       },
       {
         type: "input",
-        message: "Pleaes enter your school",
+        message: "Please enter the Intern's school",
         name: "school",
       },
     ])
@@ -111,7 +111,7 @@ const intPrompt = () => {
         answers.school
       );
       team.push(intern);
-      promptList();
+      listOfPromp();
     });
 };
 
@@ -122,26 +122,18 @@ const listOfPromp = () => {
         type: "list",
         message: "What is next?",
         name: "options",
-        choices: [
-          "Add a new manager",
-          "Add a new engineer",
-          "Add a new intern",
-          "Finish",
-        ],
+        choices: ["Add a new engineer", "Add a new intern", "Finish"],
       },
     ])
     .then((userChoice) => {
       switch (userChoice.options) {
-        case "Add a manager":
-          manPrompt();
-          break;
-        case "Add an engineer":
+        case "Add a new engineer":
           engPrompt();
           break;
-        case "Add an intern":
+        case "Add a new intern":
           intPrompt();
           break;
-        case "Finish":
+        default:
           endPrompt();
           break;
       }
@@ -149,7 +141,7 @@ const listOfPromp = () => {
 };
 
 const endPrompt = () => {
-  fs.writeFileSync("index.html", generateMarkdown(team), "utf-8");
+  fs.writeFileSync("./dist/index.html", theMarkdown(team), "utf-8");
 };
 
-listOfPromp();
+manPrompt();
